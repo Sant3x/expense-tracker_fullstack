@@ -5,7 +5,9 @@ import { signout } from '../../utils/Icons'
 import { menuItems } from '../../utils/menuItems'
 
 function Navigation({active, setActive}) {
-    
+
+
+
     return (
         <NavStyled>
             <div className="user-con">
@@ -19,8 +21,11 @@ function Navigation({active, setActive}) {
                 {menuItems.map((item) => {
                     return <li
                         key={item.id}
-                        onClick={() => setActive(item.id)}
-                        className={active === item.id ? 'active': ''}
+                        onClick={() => {
+                            console.log(`Clicked on item: ${item.id}`);
+                            setActive(item.id);
+                        }}
+                        className={active === item.id ? 'active' : ''}
                     >
                         {item.icon}
                         <span>{item.title}</span>
@@ -33,13 +38,15 @@ function Navigation({active, setActive}) {
                 </li>
             </div>
         </NavStyled>
-    )
+    );
 }
+
+
 
 const NavStyled = styled.nav`
     padding: 2rem 1.5rem;
-    width: 374px;
-    height: 100%;
+    width: 300px;
+    height: 80%;
     background: rgba(252, 246, 249, 0.78);
     border: 3px solid #FFFFFF;
     backdrop-filter: blur(4.5px);
@@ -70,7 +77,6 @@ const NavStyled = styled.nav`
             color: rgba(34, 34, 96, .6);
         }
     }
-
     .menu-items{
         flex: 1;
         display: flex;
@@ -93,7 +99,6 @@ const NavStyled = styled.nav`
             }
         }
     }
-
     .active{
         color: rgba(34, 34, 96, 1) !important;
         i{
