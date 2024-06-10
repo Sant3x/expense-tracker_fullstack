@@ -18,7 +18,11 @@
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
+    "homepage": "https://Sant3x.github.io",
   },
+
+
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
