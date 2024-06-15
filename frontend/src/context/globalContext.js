@@ -13,10 +13,10 @@ export const GlobalProvider = ({children}) => {
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
 
-    //calculate incomes
+    // Calculate incomes
     const addIncome = async (income) => {
         const response = await axios.post(`${BASE_URL}add-income`, income)
-            .catch((err) =>{
+            .catch((err) => {
                 setError(err.response.data.message)
             })
         getIncomes()
@@ -29,24 +29,30 @@ export const GlobalProvider = ({children}) => {
     }
 
     const deleteIncome = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-income/${id}`)
+        const res = await axios.delete(`${BASE_URL}delete-income/${id}`)
         getIncomes()
     }
 
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    });
+
     const totalIncome = () => {
-        let totalIncome = 0;
-        incomes.forEach((income) =>{
-            totalIncome = totalIncome + income.amount
+        let totalIncome = 0
+        incomes.forEach((income) => {
+            totalIncome = totalIncome + (income.amount)
+         
         })
 
-        return totalIncome;
+        return formatter.format(totalIncome);
     }
 
-
-    //calculate incomes
-    const addExpense = async (income) => {
-        const response = await axios.post(`${BASE_URL}add-expense`, income)
-            .catch((err) =>{
+    // Calculate expenses
+    const addExpense = async (expense) => {
+        const response = await axios.post(`${BASE_URL}add-expense`, expense)
+            .catch((err) => {
                 setError(err.response.data.message)
             })
         getExpenses()
@@ -59,22 +65,22 @@ export const GlobalProvider = ({children}) => {
     }
 
     const deleteExpense = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-expense/${id}`)
+        const res = await axios.delete(`${BASE_URL}delete-expense/${id}`)
         getExpenses()
     }
 
     const totalExpenses = () => {
-        let totalIncome = 0;
-        expenses.forEach((income) =>{
-            totalIncome = totalIncome + income.amount
+        let totalExpenses = 0;
+        expenses.forEach((expense) => {
+            totalExpenses = totalExpenses + parseFloat(expense.amount)
         })
 
-        return totalIncome;
+        return formatter.format(totalExpenses);
     }
 
-
     const totalBalance = () => {
-        return totalIncome() - totalExpenses()
+        let totalBalance1 = totalIncome() - totalExpenses()
+        return formatter.format(totalBalance1);
     }
 
     const transactionHistory = () => {
@@ -85,7 +91,6 @@ export const GlobalProvider = ({children}) => {
 
         return history.slice(0, 3)
     }
-
 
     return (
         <GlobalContext.Provider value={{
@@ -109,6 +114,6 @@ export const GlobalProvider = ({children}) => {
     )
 }
 
-export const useGlobalContext = () =>{
+export const useGlobalContext = () => {
     return useContext(GlobalContext)
 }
