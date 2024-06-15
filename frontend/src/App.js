@@ -64,9 +64,8 @@ function LoggedInLayout() {
 }
 
 const AppStyled = styled.div`
-  height: 300px;
-  background-image: url(${(props) => props.bg});
-  position: relative;
+  height: 360px;
+ 
   main {
     flex: 1;
     background: rgba(252, 246, 249, 0.78);
